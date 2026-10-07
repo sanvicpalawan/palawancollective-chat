@@ -1,0 +1,27 @@
+version: 1.3.0
+cache: true
+endpoints:
+  custom:
+    - name: "Local-Ollama"
+      apiKey: "ollama"
+      baseURL: "http://host.docker.internal:11434/v1"
+      models:
+        default: ["SparkLLM/Spark-X2.5-4B:latest", "deepseek-r1:7b"]
+        fetch: false
+      titleModel: "current_model"
+      titleTiming: "immediate"
+      streamRate: 25
+      maxContextTokens: 8192
+      modelDisplayLabel: "Ollama"
+    - name: "OpenRouter"
+      apiKey: "${OPENROUTER_KEY}"
+      baseURL: "https://openrouter.ai/api/v1"
+      models:
+        default: ["nvidia/nemotron-3-ultra-550b-a55b:free", "qwen/qwen3-coder:free", "meta-llama/llama-3.3-70b-instruct:free"]
+        fetch: true
+      titleConvo: true
+      titleModel: "current_model"
+      titleTiming: "immediate"
+      streamRate: 25
+      maxContextTokens: 8192
+      modelDisplayLabel: "OpenRouter"
