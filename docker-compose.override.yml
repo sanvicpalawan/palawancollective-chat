@@ -1,0 +1,23 @@
+services:
+  api:
+    volumes:
+    - type: bind
+      source: ./librechat.yaml
+      target: /app/librechat.yaml
+    # Palawan Collective rebrand: patched shell (title, meta description, and the
+    # +50% logo size rule). The API reads this file at boot (api/server/index.js:280)
+    # rather than serving it through the gzip middleware, so edits apply on restart.
+    # NOTE: it references this image's hashed asset names (index.*.js/css). If the
+    # LibreChat image is updated, re-copy index.html from the new container.
+    - type: bind
+      source: ./branding/index.html
+      target: /app/client/dist/index.html
+    # Palawan Collective logo (white variant, for the black site background).
+    # dist wins over public/assets — api/server/index.js:370 mounts paths.dist
+    # before paths.assets at :372 — so both are bound to be safe.
+    - type: bind
+      source: ./branding/palawancollective_logo_white.svg
+      target: /app/client/dist/assets/logo.svg
+    - type: bind
+      source: ./branding/palawancollective_logo_white.svg
+      target: /app/client/public/assets/logo.svg
